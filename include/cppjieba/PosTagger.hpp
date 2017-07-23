@@ -51,7 +51,10 @@ class PosTagger {
     size_t m = 0;
     size_t eng = 0;
     for (size_t i = 0; i < unicode.size() && eng < unicode.size() / 2; i++) {
-      if (unicode[i].rune < 0x80) {
+      // We extend this part to include a bit more than ASCII -- latin stuff.
+      // The core rationale at doing so is to process Jiang's speech,
+      // namely the "y'all naive" talk.
+      if (unicode[i].rune < 02FF) {
         eng ++;
         if ('0' <= unicode[i].rune && unicode[i].rune <= '9') {
           m++;
